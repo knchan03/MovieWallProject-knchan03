@@ -1,6 +1,9 @@
+import com.opencsv.CSVReader;
+
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class project01{
 
@@ -12,13 +15,10 @@ public class project01{
             String actor = sc.next();
             System.out.println(actor + "\n");
             File file = new File("src/main/java/tmdb_5000_credits.csv");
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String data = reader.nextLine();
-                String[] split = data.split(",");
-                System.out.println(split[2]);
-            }
-            reader.close();
+            FileReader file_reader = new FileReader(file);
+            CSVReader csv_reader = new CSVReader(file_reader);
+
+
         }
         catch(FileNotFoundException e){
             System.out.println("Couldn't Open File");
