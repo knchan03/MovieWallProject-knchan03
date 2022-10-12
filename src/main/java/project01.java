@@ -63,7 +63,6 @@ public class project01{
                     }
                     if (count == 1){
                         movie_name = cell;
-                        //System.out.println(movie_name);
                     }
                     if (count == 2){
                         String json_data = cell;
@@ -73,17 +72,18 @@ public class project01{
                             character_info = character.split(", ");
                             name = character_info[5].replace("\"name\": ", "").replace("\"", "");
                             character_name = character_info[1].replace("\"character\": ", "").replace("\"", "");
+                            int size = actorsList.size();
                             actorsList = addActor(name, movie_name, character_name, actorsList);
-                            System.out.println(actorsList.get(i).getName());
-                            i++;
+                            if (size != actorsList.size()) {
+                                System.out.println(actorsList.get(actorsList.size() - 1).getName());
+                                System.out.println(actorsList.size());
+                            }
                         }
                     }
                     count++;
                 }
 
-                System.out.println(i);
             }
-
             csv_reader.close();
 
 
