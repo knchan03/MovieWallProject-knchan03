@@ -2,21 +2,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 public class ActorWall {
-    String name;
-    HashMap<String, String> movie = new HashMap<String, String>();
-    List<HashMap> movies = new ArrayList<HashMap>();
+    private String name;
+    private List<String> movies = new ArrayList<String>();
+    private List<String> characters = new ArrayList<String>();
 
     public ActorWall(String name){
         this.name = name;
     }
 
     public void addMovie(String movie, String character){
-        this.movie.put(movie, character);
-        movies.add(this.movie);
+        movies.add(movie);
+        characters.add(character);
     }
 
-    public List<HashMap> getMovies(){
-        return movies;
+    public List<String> getCharacters() {
+        return characters;
+    }
+
+    public void getMovies(){
+        System.out.println("Actor: " + this.name);
+        for (int i = 0; i < this.movies.size(); i++){
+            System.out.println("* Movie: " + movies.get(i) + " as " + characters.get(i));
+        }
     }
 
     public String getName(){
