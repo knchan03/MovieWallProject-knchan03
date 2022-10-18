@@ -9,7 +9,7 @@ public class ActorWall {
      * Constructor for ActorWall
      * @param name name of actor
      */
-    public ActorWall(String name){
+    public ActorWall(String name) {
         this.name = name;
     }
 
@@ -18,7 +18,7 @@ public class ActorWall {
      * @param movie movie name
      * @param character character name
      */
-    public void addMovie(String movie, String character){
+    public void addMovie(String movie, String character) {
         movies.add(movie);
         characters.add(character);
     }
@@ -26,9 +26,9 @@ public class ActorWall {
     /**
      * Prints all movies and characters in those movies
      */
-    public void getMovies(){
+    public void getMovies() {
         System.out.println("Actor: " + this.name);
-        for (int i = 0; i < this.movies.size(); i++){
+        for (int i = 0; i < this.movies.size(); i++) {
             System.out.println("* Movie: " + movies.get(i) + " as " + characters.get(i));
         }
     }
@@ -37,7 +37,7 @@ public class ActorWall {
      *
      * @return actor name
      */
-    public String getName(){
+    public String getName() {
         return name;
     }
 }

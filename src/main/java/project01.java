@@ -19,10 +19,10 @@ public class project01{
      * @param character character name
      * @param actorsList List of ActorWalls
      */
-    public static void addActor(String actor, String movie, String character, List<ActorWall> actorsList){
+    public static void addActor(String actor, String movie, String character, List<ActorWall> actorsList) {
 
-        for (int i = 0;i < actorsList.size(); i++){
-            if (actorsList.get(i).getName().equalsIgnoreCase(actor)){
+        for (int i = 0;i < actorsList.size(); i++) {
+            if (actorsList.get(i).getName().equalsIgnoreCase(actor)) {
                 actorsList.get(i).addMovie(movie, character);
                 return;
             }
@@ -39,7 +39,7 @@ public class project01{
      * @param right right index
      */
     public static void quickSort(List<ActorWall> unsorted_actors, int left, int right) {
-        if (left < right){
+        if (left < right) {
             int p = partition(unsorted_actors, left, right);
             quickSort(unsorted_actors, left, p - 1);
             quickSort(unsorted_actors, p + 1, right);
@@ -47,14 +47,13 @@ public class project01{
     }
 
     /**
-     *
+     * Swaps ActorWalls using indices
      * @param actorWall List of ActorWalls
      * @param i index of first element being switched
      * @param j index of second element being switched
      */
     public static void swap(List<ActorWall> actorWall, int i, int j) {
-        ActorWall temp = new ActorWall(" ");
-        temp = actorWall.get(i);
+        ActorWall temp = actorWall.get(i);
         actorWall.set(i, actorWall.get(j));
         actorWall.set(j, temp);
     }
@@ -71,8 +70,8 @@ public class project01{
 
         int i = (left - 1);
 
-        for (int j = left; j <= right - 1; j++){
-            if (actorWall.get(j).getName().compareTo(actorWall.get(pivot).getName()) < 0){
+        for (int j = left; j <= right - 1; j++) {
+            if (actorWall.get(j).getName().compareTo(actorWall.get(pivot).getName()) < 0) {
                 i++;
                 swap(actorWall, i, j);
             }
@@ -87,24 +86,24 @@ public class project01{
      * @param actor Actor being searched for
      * @return index of nearest actor if not found, -1 if found
      */
-    public static int search(List<ActorWall> actorWall, String actor){
+    public static int search(List<ActorWall> actorWall, String actor) {
         int min = 0;
         int max = actorWall.size() - 1;
         int mid = 0;
-        while (min <= max){
+        while (min <= max) {
             mid = (min + max) / 2;
-            if (actorWall.get(mid).getName().compareTo(actor) == 0){
+            if (actorWall.get(mid).getName().compareTo(actor) == 0) {
                 actorWall.get(mid).getMovies(); //prints all roles of actor
-                return -1;
+                return -1; //returns -1 if found
             }
-            else if (actorWall.get(mid).getName().compareTo(actor) < 0){
+            else if (actorWall.get(mid).getName().compareTo(actor) < 0) {
                 min = mid + 1;
             }
-            else{
+            else {
                 max = mid - 1;
             }
         }
-        return mid;
+        return mid; //returns index of where actor would be
     }
 
     /**
@@ -112,10 +111,9 @@ public class project01{
      * @param stream filepath
      * @return List of ActorWalls
      */
-    public static List<ActorWall> readFile(String stream){
+    public static List<ActorWall> readFile(String stream) {
         List<ActorWall> actorsList = new ArrayList<ActorWall>();
-        try{
-
+        try {
             File file = new File(stream);
             FileReader file_reader = new FileReader(file);
             BufferedReader buff_reader = new BufferedReader(file_reader);
@@ -128,6 +126,7 @@ public class project01{
             String[] character_data;
             String character_name = "";
             String movie_name;
+
             while ((line = buff_reader.readLine()) != null) {
                 line_data = line.split("\\[\\{"); //separates json from rest of line
                 if (line_data.length > 1) { // checks for header line
@@ -146,27 +145,27 @@ public class project01{
             }
             file_reader.close();
         }
-        catch(Exception e){
+        catch(Exception e) {
             System.out.println(e);
         }
-        return actorsList;
+        return actorsList; //returns unsorted list of ActorWalls
     }
 
     public static void main(String[] args) {
-        List<ActorWall> actors = readFile(args[0]); //path to file stated in configurations (Ex: "src/main/java/tmdb_5000_credits.csv")
-        quickSort(actors, 0, actors.size() - 1);
+        List<ActorWall> actors = readFile(args[0]); //reads file using arg stated in config (Ex: "src/main/java/tmdb_5000_credits.csv")
+        quickSort(actors, 0, actors.size() - 1); //quicksorts unsorted ActorWall list
         Scanner sc = new Scanner(System.in);
         String actor = "";
-        System.out.println("Welcome to Movie Wall!");
+        System.out.print("Welcome to Movie Wall!");
         while (!(actor.equalsIgnoreCase("EXIT"))) {
-            System.out.println("Enter the name of an actor (or \"EXIT\" to quit): ");
+            System.out.print("\nEnter the name of an actor (or \"EXIT\" to quit): ");
             actor = sc.nextLine();
             int index = search(actors, actor);
-            if (index != -1 && !actor.equals("EXIT")){
-                System.out.println("No such actor. Did you mean \" " + actors.get(index).getName() + "\"? (Y/N)");
-                String yn = sc.nextLine();
-                if (yn.equals("Y") || yn.equals("y")){
-                    actors.get(index).getMovies();
+            if (index != -1 && !actor.equalsIgnoreCase("EXIT")) { //if actor is not found, use index to produce suggested actor
+                System.out.print("No such actor. Did you mean \"" + actors.get(index).getName() + "\"? (Y/N): ");
+                String yn = sc.nextLine(); // yes or no
+                if (yn.equalsIgnoreCase("Y")) {
+                    actors.get(index).getMovies(); //if yes, print all movies
                 }
             }
         }
